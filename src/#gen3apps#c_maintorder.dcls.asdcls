@@ -1,0 +1,45 @@
+@EndUserText.label: 'Mapping role for /GEN3APPS/C_MaintOrder'
+@MappingRole: true
+define role /GEN3APPS/C_MAINTORDER {
+    grant select on /GEN3APPS/C_MAINTORDER 
+    where
+  //   I_TCODE    (PM: Transaction Code) --> Start Up Authorization
+      ( ) = aspect pfcg_auth ( I_TCODE, TCD = 'IW39', TCD = 'IW33')
+      and
+//       I_AUART    (PM: Order Type)
+(MaintenancePlanningPlant, MaintenanceOrderType) = aspect pfcg_auth(I_AUART, IWERK, AUFART)
+    and
+      // I_BEGRP    (PM: Authorization Group)
+      (_Equipment.AuthorizationGroup) ?= aspect pfcg_auth(I_BEGRP, BEGRP, TCD = 'IW33')
+     and
+      // I_BEGRP    (PM: Authorization Group)
+      (_LocationAccountAssignment._FunctionalLocation.AuthorizationGroup) ?= aspect pfcg_auth(I_BEGRP, BEGRP, TCD = 'IW33')
+      and
+      // I_IWERK    (PM: Maintenance Planning Plant)
+      (MaintenancePlanningPlant) ?= aspect pfcg_auth(I_IWERK, IWERK, TCD = 'IW33')
+      and
+       // I_INGRP    (PM: Maintenance Planner Group)
+         (MaintenancePlanningPlant, MaintenancePlannerGroup) ?= aspect pfcg_auth(I_INGRP, IWERK, INGRP, TCD = 'IW33')
+      and
+      // I_SWERK    (PM: Maintenance Plant)
+      (_LocationAccountAssignment.MaintenancePlant) ?= aspect pfcg_auth(I_SWERK, SWERK, TCD = 'IW33') 
+      and
+      // I_KOSTL    (PM: Cost Centers)
+      (_LocationAccountAssignment.ControllingArea, _LocationAccountAssignment.CostCenter) ?= aspect pfcg_auth(I_KOSTL, KOKRS, KOSTL, TCD = 'IW33')
+
+       and
+ // Employee
+        (  _MaintOrdPersonResponsible._BusinessPartner.IsBusinessPurposeCompleted ?= '' // IsBusinessPurposeCompleted ?= ''       // Not assigned or not blocked
+          or 
+          ( 
+            ( ) = aspect pfcg_auth (B_BUP_PCPT, actvt = '03')               // Auditor
+            and
+            (_MaintOrdPersonResponsible.AuthorizationGroup) ?= aspect pfcg_auth (B_BUPA_GRP, BEGRU, actvt = '03')
+          )
+        )
+     ;
+     
+//and
+//    (MaintenancePlanningPlant) = aspect pfcg_auth(I_IWERK, IWERK)
+                      
+}

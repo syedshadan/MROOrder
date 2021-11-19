@@ -1,0 +1,29 @@
+unmanaged implementation in class /gen3apps/bp_c_maintorder unique;
+
+define behavior for /GEN3APPS/C_MaintOrder //alias <alias_name>
+//late numbering
+//lock master
+//authorization master
+//etag <field_name>
+{
+
+  action ( features : instance ) release result [1] $self;
+  action ( features : instance ) cancel_business_comp result [1] $self;
+
+
+  action ( features : instance ) change_schedule parameter /GEN3APPS/ORD_CHANGE_SCHEDULE;
+  action ( features : instance ) complete_business parameter /GEN3APPS/ORD_COMP_BUSINESS;
+  action ( features : instance ) update_task_list parameter /GEN3APPS/ORD_UPD_T_LIST;
+  action ( features : instance ) complete_technically parameter /GEN3APPS/ORD_COMPLETE_TECH;
+  action ( features : instance ) do_not_execute parameter /GEN3APPS/ORD_DO_NOT_EXECUTE;
+  action ( features : instance ) assign_network parameter /GEN3APPS/ORD_ASSIGN_NW;
+  action ( features : instance ) change_responsibility parameter /GEN3APPS/ORD_CHGE_RESP;// result [1] $self;
+  action ( features : instance ) cancel_tech_completion parameter /GEN3APPS/ORD_CANCEL_TECH;
+
+
+  field ( read only ) LateCompletion_Flag, ConcatenatedActiveUserStsName, ConcatenatedActiveSystStsName;
+  field ( read only ) PersonResponsibleName, MaintOrdCostCriticality, ActVsPlanCost_Flag, MaintOrdTotalCost;
+  field ( read only ) NetworkActivity;
+  field ( read only ) MaintenanceOrderLongText;
+
+}

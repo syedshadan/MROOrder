@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SRVB" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <SRVB>
+    <METADATA>
+     <NAME>/GEN3APPS/C_MAINTORDER_SB</NAME>
+     <VERSION>active</VERSION>
+     <DESCRIPTION>Service Binding for MRO Maintenance Order</DESCRIPTION>
+    </METADATA>
+    <CONTENT>
+     <BIND_TYPE_IMPL>
+      <NAME>/GEN3APPS/C_MAINTORDER_SB</NAME>
+     </BIND_TYPE_IMPL>
+     <BIND_TYPE>ODATA</BIND_TYPE>
+     <BIND_TYPE_VERSION>V2</BIND_TYPE_VERSION>
+     <SERVICES>
+      <item>
+       <SERVICE_NAME>/GEN3APPS/C_MAINTORDER_SB</SERVICE_NAME>
+       <SERVICE_CONTENT>
+        <item>
+         <SERVICE_VERSION>0001</SERVICE_VERSION>
+         <SRVD_REF>
+          <URI>/sap/bc/adt/ddic/srvd/sources/%2fgen3apps%2fc_maintorder_sd</URI>
+          <TYPE>SRVD/SRV</TYPE>
+          <NAME>/GEN3APPS/C_MAINTORDER_SD</NAME>
+         </SRVD_REF>
+        </item>
+       </SERVICE_CONTENT>
+      </item>
+     </SERVICES>
+    </CONTENT>
+    <PUBLISHED>true</PUBLISHED>
+   </SRVB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

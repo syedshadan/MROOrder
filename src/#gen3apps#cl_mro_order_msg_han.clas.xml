@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>/GEN3APPS/CL_MRO_ORDER_MSG_HAN</CLSNAME>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Message Handler for MRO Maintenance Order App</DESCRIPT>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>/GEN3APPS/CL_MRO_ORDER_MSG_HAN</CLSNAME>
+     <CMPNAME>HANDLE_MESSAGES</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Handle Messages of MRO Maintenance Order App</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>/GEN3APPS/CL_MRO_ORDER_MSG_HAN</CLSNAME>
+     <CMPNAME>OBJ</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Message Handler for MRO Maintenance Order App</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

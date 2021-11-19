@@ -1,0 +1,432 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+ imageUrl: 'MaintenanceOrderThumbnailURL',
+ typeName: 'Maintenance Order', typeNamePlural: 'Maintenance Orders',
+ title: { type: #STANDARD, value: 'MaintenanceOrder' },
+ description : { type: #STANDARD, value: 'MaintenanceOrderDesc' }
+  }
+
+annotate view /GEN3APPS/C_MaintOrder with
+{
+
+  // For Action Buttons on List Page
+//  @UI: {
+//   lineItem: [
+//            { type: #FOR_ACTION, dataAction: 'change_responsibility', label: 'Change Responsibility', position: 10 , invocationGrouping:#CHANGE_SET },
+//              { type: #FOR_ACTION, dataAction: 'release', label: 'Release', position: 20 , invocationGrouping:#CHANGE_SET },
+//               { type: #FOR_ACTION, dataAction: 'do_not_execute', label: 'Do Not Execute', position: 30 },
+//               { type: #FOR_ACTION, dataAction: 'complete_technically', label: 'Complete Technically', position: 40 },
+//             { type: #FOR_ACTION, dataAction: 'complete_business', label: 'Complete (Business)', position: 50 }
+//               { type: #FOR_ACTION, dataAction: 'cancel_tech_completion', label: 'Cancel Technical Completion', position: 60 },
+//               { type: #FOR_ACTION, dataAction: 'cancel_business_comp', label: 'Cancel Business Completion', position: 70 },
+//               { type: #FOR_ACTION, dataAction: 'change_schedule', label: 'Change Scheduling', position: 80 },
+//               { type: #FOR_ACTION, dataAction: 'assign_network', label: 'Assign Network Activity', position: 90 },
+//               { type: #FOR_ACTION, dataAction: 'update_task_list', label: 'Update Task List', position: 100 },
+//               { position: 10 } 
+// ] }
+
+  // Object Page
+  @UI.facet: [
+
+      { purpose: #HEADER, position: 10, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderType' },
+      { purpose: #HEADER, position: 20, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintNotif' },
+      { purpose: #HEADER, position: 30, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderSysStat' },
+      { purpose: #HEADER, position: 40, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderPrio' },
+      { purpose: #HEADER, position: 50, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderStDate' },
+      { purpose: #HEADER, position: 60, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderUsrStat' },
+      { purpose: #HEADER, position: 70, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderTechObj' },
+      { purpose: #HEADER, position: 80, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderEndDate' },
+      { purpose: #HEADER, position: 90, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderActCost' },
+      { purpose: #HEADER, position: 100, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderPlanCost' },
+      { purpose: #HEADER, position: 110, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderOrigFiles' },
+      { purpose: #HEADER, position: 120, type: #DATAPOINT_REFERENCE, targetQualifier: 'MaintOrderOper' } ,
+
+                            {      id:              'Gen',
+                                   label:           'General Information',
+                                   purpose:         #STANDARD,
+                                   type:            #COLLECTION,
+                                   position:        10 },
+
+                            {
+                             id: 'GenInfo',
+                             targetQualifier: 'GenInfo',
+                             label: 'General',
+                             purpose: #STANDARD,
+                             type: #FIELDGROUP_REFERENCE,
+                             parentId: 'Gen',
+                             position: 10 },
+
+                            {
+                             id: 'Resp',
+                             targetQualifier: 'Resp',
+                             label: 'Responsibilities',
+                             purpose: #STANDARD,
+                             type: #FIELDGROUP_REFERENCE,
+                             parentId: 'Gen',
+                             position: 20 },
+
+                            {
+                             id: 'Date',
+                             targetQualifier: 'Date',
+                             label: 'Dates',
+                             purpose: #STANDARD,
+                             type: #FIELDGROUP_REFERENCE,
+                             parentId: 'Gen',
+                             position: 30 },
+
+                             {
+                              id: 'Techobj',
+                              targetQualifier: 'Techobj',
+                             label: 'Technical Object',
+                             purpose: #STANDARD,
+                             type: #FIELDGROUP_REFERENCE,
+                             parentId: 'Gen',
+                             position: 40 }
+            ]
+
+
+  // Action Buttons on Object Page
+//  @UI.identification: [ { position: 10,  type: #FOR_ACTION,  label: 'Complete Technically',  dataAction: 'complete_technically' },
+//                        { position: 2,  type: #FOR_ACTION,  label: 'Change Scheduling',      dataAction: 'change_schedule'},
+//                        { position: 3,  type: #FOR_ACTION,  label: 'Change Responsibility',  dataAction: 'change_responsibility'},
+//                        { position: 4,  type: #FOR_ACTION,  label: 'Assign Network',         dataAction: 'assign_network'},
+//                        { position: 5,  type: #FOR_ACTION,  label: 'Update Task List',       dataAction: 'update_task_list'}
+//                      ]
+
+  @UI.selectionField: [{position:  10 }]
+  @Consumption.valueHelpDefinition: [
+           { entity:  { name:    'I_MaintenanceOrderStdVH',
+                        element: 'MaintenanceOrder' }
+           }]
+  @Search: { defaultSearchElement: true, fuzzinessThreshold: 0.8, ranking: #HIGH }
+  @Consumption.semanticObject: 'MaintenanceOrder'
+  MaintenanceOrder;
+
+  @UI.lineItem: [{position: 20 }]
+  @UI.selectionField: [{position:  20 }]
+  @UI.dataPoint: { qualifier: 'MaintOrderType' , title: 'Order Type' }
+  @Consumption.valueHelpDefinition: [
+       { entity:  { name:    'C_MaintOrderTypeVH',
+                    element: 'MaintenanceOrderType' }
+       }]
+  MaintenanceOrderType;
+
+
+  @UI.lineItem: [{position: 30 }]
+  // @UI.identification: [{position: 10 }]
+  @UI.dataPoint: { qualifier: 'MaintNotif' , title: 'Notification' }
+  @UI.fieldGroup: [{ qualifier: 'GenInfo', position: 10, label: 'Notification'  }]
+  @Consumption.semanticObject: 'MaintenanceNotification'
+  MaintenanceNotification;
+
+
+  @UI.lineItem: [{position: 40 }]
+  @UI.selectionField: [{position:  30 }]
+  @UI.dataPoint: { qualifier: 'MaintOrderPrio' , title: 'Priority' }
+  @Consumption.valueHelpDefinition: [
+      { entity:  { name:    'I_PMNotificationPriority',
+                  element: 'MaintPriority' },
+      additionalBinding: [{ element: 'MaintPriorityType', localElement: 'MaintPriorityType' }]
+      }]
+  MaintPriority;
+
+
+  @UI.selectionField: [{position:  40 }]
+  @EndUserText.label: 'Technical Object'
+  @UI.dataPoint: { qualifier: 'MaintOrderTechObj' , title: 'Technical Object' }
+  @Consumption.valueHelpDefinition: [
+   { entity:  { name:    '/GEN3APPS/I_TechnicalObjectVH',
+              element: 'TechnicalObject' }}]
+  // @ObjectModel.text.element: ['TechnicalObjectDescription']
+  @Search: { defaultSearchElement: true, ranking: #HIGH, fuzzinessThreshold: 0.8 }
+  @UI.fieldGroup: [{ qualifier: 'Techobj', position: 10, label: 'Technical Object' }]
+  TechnicalObject;
+
+
+  @UI.lineItem: [{position: 50 }]
+  @Consumption.filter.hidden: true
+  @EndUserText.label: 'Technical Object Description'
+  @Consumption.valueHelpDefinition: [
+       { entity:  { name:    '/GEN3APPS/I_TechnicalObjectVH',
+                  element: 'TechnicalObject' }}]
+  TechnicalObjectLabel;
+
+
+  @UI.lineItem: [{position: 60 }]
+  @UI.selectionField: [{position:  50 }]
+  @UI.dataPoint: { qualifier: 'MaintOrderStDate' , title: 'Start Date' }
+  @UI.fieldGroup: [{ qualifier: 'Date', position: 10, label: 'Start Date' }]
+  MaintOrdBasicStartDate;
+
+
+  @UI.lineItem: [{position: 70 }]
+  @UI.selectionField: [{position:  60 }]
+  @UI.dataPoint: { qualifier: 'MaintOrderEndDate' , title: 'End Date' }
+  @UI.fieldGroup: [{ qualifier: 'Date', position: 20, label: 'End Date' }]
+  MaintOrdBasicEndDate;
+
+
+  @UI.lineItem: [{position: 80 }]
+  @UI.selectionField: [{position:  70 }]
+  //  @UI.identification: [{position: 10 }]
+  @UI.fieldGroup: [{ qualifier: 'Resp', position: 10, label: 'Maintenance Work Center'  }]
+  MainWorkCenter;
+
+  @UI.lineItem: [{position: 90 }]
+  @UI.selectionField: [{position:  80 }]
+  @UI.fieldGroup: [{ qualifier: 'Resp', position: 20, label: 'Work Center Plant'  }]
+  MainWorkCenterPlant;
+
+  @UI.lineItem: [{position: 100 }]
+  @UI.selectionField: [{position:  90 }]
+  //  @UI.identification: [{position: 30 }]
+  @UI.fieldGroup: [{ qualifier: 'GenInfo', position: 30, label: 'Maintenance Plan'  }]
+  MaintenancePlan;
+
+  @UI.lineItem: [{position: 110 }]
+  @UI.selectionField: [{position:  100 }]
+  MaintenanceItem;
+
+  @UI.lineItem: [{position: 120 }]
+  @UI.selectionField: [{position:  110 }]
+  @Consumption.valueHelpDefinition: [
+        { entity:  { name:    'C_MaintenanceOrderPhaseVH',
+                     element: 'MaintenanceProcessingPhase' }
+        }]
+  MaintenanceProcessingPhase;
+
+  @UI.lineItem: [{position: 170 }]
+  @UI.selectionField: [{position:  120 }]
+  MaintenanceRevision;
+
+  @UI.selectionField: [{position:  130 }]
+  @UI.fieldGroup: [{ qualifier: 'Resp', position: 40, label: 'Planning Plant'  }]
+  MaintenancePlanningPlant;
+
+  @UI.lineItem: [{position: 130 }]
+  @UI.selectionField: [{position:  140 }]
+  @EndUserText.label: 'Late Completion'
+  @EndUserText.quickInfo: 'Indicator'
+  @Consumption.filter.multipleSelections: true
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Indicator', element: 'IndicatorValue'} }]
+  LateCompletion_Flag;
+
+  @UI.lineItem: [{position: 140 }]
+  @UI.selectionField: [{position:  150 }]
+  @EndUserText.label: 'Actual > Planned Cost'
+  @EndUserText.quickInfo: 'Indicator'
+  @Consumption.filter.multipleSelections: true
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Indicator', element: 'IndicatorValue'} }]
+  ActVsPlanCost_Flag;
+
+  @UI.selectionField: [{position:  160 }]
+  @UI.dataPoint: { qualifier: 'MaintOrderSysStat' , title: 'System Status' }
+  @EndUserText.label: 'System Status'
+  ConcatenatedActiveSystStsName;
+
+  @EndUserText.label: 'Maintenance Activity Type'
+  @Consumption.valueHelpDefinition: [
+      { entity:  { name:    '/GEN3APPS/I_MaintActivityTypVH',
+                   element: 'MaintenanceActivityType' }
+      }]
+  MaintenanceActivityType;
+
+  @EndUserText.label: 'Maintenance Activity Type Name'
+  MaintenanceActivityTypeName;
+
+  @UI.lineItem: [{position: 150 }]
+  @UI.fieldGroup: [{ qualifier: 'Resp', position: 50, label: 'Person Responsible'  }]
+  MaintOrdPersonResponsible;
+
+  @UI.fieldGroup: [{ qualifier: 'Date', position: 30, label: 'Created On' }]
+  CreationDate;
+
+  @UI.fieldGroup: [{ qualifier: 'Date', position: 40, label: 'Created By' }]
+  CreatedByUser;
+
+  @UI.fieldGroup: [{ qualifier: 'Techobj', position: 20, label: 'Material' }]
+  Material;
+
+  @UI.fieldGroup: [{ qualifier: 'Techobj', position: 40, label: 'Assembly' }]
+  Assembly;
+
+  @UI.fieldGroup: [{ qualifier: 'Techobj', position: 50, label: 'System Condition' }]
+  OperationSystemCondition;
+
+  @UI.lineItem: [{position: 160 }]
+  @UI.fieldGroup: [{ qualifier: 'Resp', position: 30, label: 'Planner Group'  }]
+  @Consumption.valueHelpDefinition: [
+  { entity:  { name:    'I_MaintPlnrGrpStdVH',
+               element: 'MaintenancePlannerGroup' },
+    additionalBinding: [{ localElement: 'MaintenancePlanningPlant',
+                          element: 'MaintenancePlanningPlant' }]
+  }]
+  MaintenancePlannerGroup;
+
+  @UI.lineItem: [{position: 180 }]
+  @EndUserText.label: 'Network'
+  @Consumption.valueHelpDefinition: [{ entity: { name: '/GEN3APPS/I_OrderNetworkVH',  element: 'ProjectNetwork' }
+      ,additionalBinding: [{ localElement: 'NetworkActivity', element: 'NetworkActivity' }]}]
+  ProjectNetwork;
+
+  @UI.lineItem: [{position: 190 }]
+  @EndUserText.label: 'Network Activity'
+  @Consumption.valueHelpDefinition: [{ entity: { name: '/GEN3APPS/I_NETWORKACTIVITYVH',  element: 'NetworkActivity' }
+       ,additionalBinding: [{ localElement: 'ProjectNetwork', element: 'ProjectNetwork' }]
+      } ]
+  NetworkActivity;
+
+  @UI.lineItem: [{position: 200 }]
+  @EndUserText.label: 'Task List Type'
+  @Consumption.valueHelpDefinition: [{ entity:  { name:    '/GEN3APPS/I_MaintTaskListTypVH',element: 'TaskListType' }}]
+  TaskListType;
+
+
+  @UI.lineItem: [{position: 210 }]
+  @Consumption.valueHelpDefinition: [{ entity:  { name:    '/GEN3APPS/I_MaintOrdTaskListVH',   element: 'TaskListGroup' },
+       additionalBinding: [{ element: 'TaskListGroupCounter', localElement: 'TaskListGroupCounter' },
+                           { element: 'TaskListType', localElement: 'TaskListType' }]
+                           }]
+  @EndUserText.label: 'Task List Group'
+  TaskListGroup;
+
+  @UI.identification: [{position: 20 , label: 'Task List' }]
+  @UI.fieldGroup: [{ qualifier: 'GenInfo', position: 20, label: 'Task List'  }]
+  @Consumption.semanticObject: 'MaintenanceTaskList'
+  TaskList;
+
+  @UI.lineItem: [{position: 220 }]
+  @EndUserText.label: 'Task List Group Counter'
+  TaskListGroupCounter;
+
+
+  @Search: { defaultSearchElement: true, ranking: #HIGH, fuzzinessThreshold: 0.8 }
+  MaintenanceOrderDesc;
+
+  @UI.hidden:true
+  TechnicalObjectDescription;
+
+  @EndUserText.label: 'User Status'
+  @Consumption.filter.hidden: true
+  @UI.hidden: true
+  ConcatenatedActiveUserStsName;
+
+
+  @EndUserText.label: 'Original Files'
+  @UI.dataPoint: { qualifier: 'MaintOrderOrigFiles' , title: 'Original Files' }
+  OrderNmbrOfAttachedDocuments;
+
+  @EndUserText.label: 'Operations'
+  @UI.dataPoint: { qualifier: 'MaintOrderOper' , title: 'Original Files' }
+  MaintOrderNumberOfOperations;
+
+  @EndUserText.label: 'Person Responsible Name'
+  PersonResponsibleName;
+
+  @EndUserText.label: 'Serial Number'
+  @UI.fieldGroup: [{ qualifier: 'Techobj', position: 30, label: 'Serial Number' }]
+  SerialNumber;
+
+  @Search.defaultSearchElement: true
+  MaintenanceOrderPlanningCode;
+
+  @EndUserText.label: 'WBS Element'
+  WBSElement;
+
+  @UI.hidden: true
+  LocAcctAssgmtWBSElement;
+
+  @UI.hidden: true
+  WBSElementInternalID;
+
+  @EndUserText.label: 'Responsible Partner Function'
+  MaintOrderRespPartnerFunction;
+
+  @EndUserText.label: 'Overdue'
+  IsOverdue;
+
+  @EndUserText.label: 'User Status'
+  @UI.dataPoint: { qualifier: 'MaintOrderUsrStat' , title: 'User Status' }
+  UserStatus;
+
+  @EndUserText.label: 'Status Profile'
+  StatusProfile;
+
+  @EndUserText.label: 'Maintenance Order Cost Criticality'
+  MaintOrdCostCriticality;
+
+  @EndUserText.label: 'Cost Estimated / Planned / Actual'
+  MaintOrdTotalCost;
+
+  //  @UI.selectionField: [{position: 170 }]
+  @EndUserText.label: 'Planned Start Event'
+  @Consumption.valueHelpDefinition: [{ entity: { name: '/GEN3APPS/I_PlanStartEvt', element: 'eventstatus_text'} }]
+  @EndUserText.quickInfo: 'Planned Start Status for Maintenance Orders'
+  Eventflag;
+
+  //  @UI.selectionField: [{position: 180 }]
+  @EndUserText.label: 'Planned Finish Event'
+  @Consumption.valueHelpDefinition: [{ entity: { name: '/GEN3APPS/I_PlanFinishEvt', element: 'eventstatus_text'} }] // /GEN3APPS/I_PlanStartStatVH
+  @EndUserText.quickInfo: 'Planned Finish Status for Maintenance Orders'
+  EventFlagFin;
+
+  @UI.hidden: true
+  LateCompletion_Ind;
+
+  @UI.hidden: true
+  TotalClosedOrderCount;
+
+  @UI.hidden: true
+  OrderClosedOnTime;
+
+  @EndUserText.label: 'Actual Cost'
+  @UI.dataPoint: { qualifier: 'MaintOrderActCost' , title: 'Actual Cost' }
+  ActualCost;
+
+  @EndUserText.label: 'Planned Cost'
+  @UI.dataPoint: { qualifier: 'MaintOrderPlanCost' , title: 'Planned Cost' }
+  PlannedCost;
+
+  @UI.hidden: true
+  ActVsPlanCost_Ind;
+
+  @EndUserText.label: 'Network Description'
+  ProjectNetworkDescription;
+
+  @EndUserText.label: 'Network Activity Description'
+  NetworkActivityDescription;
+
+  @EndUserText.label: 'Order Without Network'
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Indicator', element: 'IndicatorValue'} }]
+  OrderNetworkFlag;
+
+  @EndUserText.label: 'Start Date Conflict'
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Indicator', element: 'IndicatorValue'} }]
+  StartDateConflict;
+
+  @EndUserText.label: 'Start Date Criticality'
+  StartDateCriticality;
+
+  @EndUserText.label: 'End Date Criticality'
+  EndDateCriticality;
+
+  @EndUserText.label: 'End Date Conflict'
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Indicator', element: 'IndicatorValue'} }]
+  EndDateConflict;
+
+  @EndUserText.label: 'Order Marked for Deletion'
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Indicator', element: 'IndicatorValue'} }]
+  OrderDelFlag;
+
+  @UI.hidden: true
+  OrdStat;
+
+  @UI.hidden: false
+  @EndUserText.label: 'Priority Type'
+  MaintPriorityType;
+
+  @UI.identification: [{ position: 40 }]
+  @UI.fieldGroup: [{ qualifier: 'GenInfo', position: 40, label: 'Long Text' }]
+  MaintenanceOrderLongText;
+
+}

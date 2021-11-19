@@ -1,0 +1,8 @@
+@EndUserText.label: 'MRO Find Maintenance Order RAP Service'
+define service /GEN3APPS/C_MaintOrder_SD {
+  expose /GEN3APPS/C_MaintOrder;
+  expose C_StsObjActiveStatusCodeText as ActiveUserStatus;
+  expose /GEN3APPS/C_MaintNotifQuickVw;
+  expose I_MaintPlnrGrpStdVH;
+  expose /GEN3APPS/I_OrderNetworkVH;
+}
